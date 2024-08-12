@@ -12,7 +12,7 @@
 -- Ejercicios
 -- 1.
     CREATE TABLE Estudiantes (
-        ID INT AUTO_INCREMENT PRIMARY KEY,
+        ID INT IDENTITY PRIMARY KEY,
         Nombre VARCHAR(100) NOT NULL,
         Edad INT,
         FechaIngreso DATE
