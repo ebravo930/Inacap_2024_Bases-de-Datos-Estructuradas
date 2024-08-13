@@ -80,6 +80,67 @@ Muestra todos los libros escritos por el autor con ID 1.
 5. **Actualizar la nacionalidad de un autor**:
 Cambia la nacionalidad del autor con ID 2 a "Peruana".
 
+
+## Ejercicios Prácticos 20240813
+
+6. **Creación de una Función**: 
+    - Descripción: Crea una función `fn_CantidadEstudiantes` que devuelva el número total de estudiantes.
+    - Script: 
+      ```sql
+      CREATE FUNCTION fn_CantidadEstudiantes() RETURNS INT AS BEGIN
+          DECLARE @total INT;
+          SELECT @total = COUNT(*) FROM Estudiantes;
+          RETURN @total;
+      END;
+      ```
+
+7. **Uso de la Función**: 
+    - Descripción: Utiliza la función creada para mostrar el total de estudiantes.
+    - Script: 
+      ```sql
+      SELECT dbo.fn_CantidadEstudiantes() AS TotalEstudiantes;
+      ```
+
+8. **Creación de un Procedimiento Almacenado para Actualizar Edad**:
+    - Descripción: Crea un procedimiento almacenado `sp_ActualizarEdad` que permita actualizar la edad de un estudiante dado su ID.
+    - Script: 
+      ```sql
+      CREATE PROCEDURE sp_ActualizarEdad @EstudianteID INT, @NuevaEdad INT AS
+      BEGIN
+          UPDATE Estudiantes SET Edad = @NuevaEdad WHERE ID = @EstudianteID;
+      END;
+      ```
+
+9. **Uso del Procedimiento Almacenado para Actualizar Edad**:
+    - Descripción: Actualiza la edad del estudiante con ID 1 a 22 años usando el procedimiento `sp_ActualizarEdad`.
+    - Script: 
+      ```sql
+      EXEC sp_ActualizarEdad @EstudianteID = 1, @NuevaEdad = 22;
+      ```
+
+10. **Creación de Índices sobre Múltiples Columnas**:
+    - Descripción: Crea un índice compuesto en las columnas `Nombre` y `FechaIngreso` para optimizar las consultas que usan estos campos.
+    - Script: 
+      ```sql
+      CREATE NONCLUSTERED INDEX idx_NombreFechaIngreso ON Estudiantes (Nombre, FechaIngreso);
+      ```
+## Ejercicios sin Solución
+
+1. **Consulta Avanzada de Estudiantes**:
+   - Escribe una consulta SQL que liste todos los estudiantes menores de 25 años ordenados por fecha de ingreso de manera ascendente.
+
+2. **Actualización de Información**:
+   - Actualiza el registro de los estudiantes para incrementar su edad en un año si han ingresado antes del año 2023.
+
+3. **Eliminar Estudiantes**:
+   - Elimina de la tabla `Estudiantes` aquellos que tienen más de 30 años.
+
+4. **Creación de Vistas Complejas**:
+   - Crea una vista llamada `VistaEstudiantesActivos` que muestre solamente los estudiantes que tienen menos de 30 años y ordena los resultados por edad de manera descendente.
+
+5. **Función para Calcular la Edad Mínima**:
+   - Desarrolla una función llamada `fn_EdadMinimaEstudiantes` que devuelva la edad mínima de los estudiantes.
+
 ## Contribuciones
 Las contribuciones a este repositorio son bienvenidas. Si tienes sugerencias para mejorar los ejercicios, por favor, crea un pull request o abre un issue.
 
