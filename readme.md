@@ -141,6 +141,77 @@ Cambia la nacionalidad del autor con ID 2 a "Peruana".
 5. **Función para Calcular la Edad Mínima**:
    - Desarrolla una función llamada `fn_EdadMinimaEstudiantes` que devuelva la edad mínima de los estudiantes.
 
+## Ejercicios Prácticos 20240819
+
+### Ejercicios con Solución
+
+1. **Función para Calcular Años de Antigüedad**:
+   - **Descripción**: Crea una función `fn_AntiguedadEmpleado` que calcule la cantidad de años que un empleado ha trabajado en la empresa basado en la fecha de ingreso.
+   - **Script**:
+     ```sql
+     CREATE FUNCTION fn_AntiguedadEmpleado (@FechaIngreso DATE) RETURNS INT AS 
+     BEGIN
+         RETURN DATEDIFF(YEAR, @FechaIngreso, GETDATE());
+     END;
+     ```
+
+2. **Consulta de Antigüedad por Departamento**:
+   - **Descripción**: Muestra el nombre del empleado, su antigüedad y el departamento al que pertenece.
+   - **Script**:
+     ```sql
+     SELECT 
+         FirstName, 
+         Department, 
+         dbo.fn_AntiguedadEmpleado(HireDate) AS Antiguedad 
+     FROM 
+         Employees;
+     ```
+
+3. **Creación de un Procedimiento para Aumentar Salario**:
+   - **Descripción**: Crea un procedimiento almacenado `sp_AumentarSalario` que incremente el salario de los empleados de un departamento específico en un porcentaje dado.
+   - **Script**:
+     ```sql
+     CREATE PROCEDURE sp_AumentarSalario @Departamento NVARCHAR(50), @Porcentaje DECIMAL(5,2) AS
+     BEGIN
+         UPDATE Employees
+         SET Salary = Salary + (Salary * @Porcentaje / 100)
+         WHERE Department = @Departamento;
+     END;
+     ```
+
+4. **Aplicar el Procedimiento de Aumento de Salario**:
+   - **Descripción**: Aumenta el salario en un 10% para todos los empleados del departamento "IT".
+   - **Script**:
+     ```sql
+     EXEC sp_AumentarSalario @Departamento = 'IT', @Porcentaje = 10;
+     ```
+
+5. **Índice para Acelerar Consultas por Antigüedad**:
+   - **Descripción**: Crea un índice en la columna `HireDate` para acelerar las consultas relacionadas con la antigüedad de los empleados.
+   - **Script**:
+     ```sql
+     CREATE INDEX idx_HireDate ON Employees (HireDate);
+     ```
+
+### Ejercicios sin Solución
+
+1. **Crear una Vista para Empleados con Más de 5 Años**:
+   - **Descripción**: Crea una vista `VistaEmpleadosAntiguos` que muestre solo los empleados con más de 5 años de antigüedad en la empresa.
+
+2. **Consulta de Promedio Salarial por Antigüedad**:
+   - **Descripción**: Escribe una consulta SQL que muestre el promedio salarial de los empleados que tienen más de 10 años en la empresa.
+
+3. **Procedimiento para Asignar Bonificaciones**:
+   - **Descripción**: Crea un procedimiento almacenado que asigne una bonificación del 5% del salario anual a los empleados que tengan más de 15 años de antigüedad.
+
+4. **Eliminar Empleados con Baja Antigüedad**:
+   - **Descripción**: Escribe una consulta para eliminar a los empleados que tengan menos de 2 años de antigüedad en la empresa.
+
+5. **Función para Calcular la Edad de los Empleados**:
+   - **Descripción**: Desarrolla una función `fn_EdadEmpleado` que devuelva la edad actual de un empleado basado en su fecha de nacimiento.
+
+
+
 ## Contribuciones
 Las contribuciones a este repositorio son bienvenidas. Si tienes sugerencias para mejorar los ejercicios, por favor, crea un pull request o abre un issue.
 
